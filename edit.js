@@ -1,5 +1,5 @@
 let 
-iteraciya = 222,
+iteraciya = 22,
 slhtml = vshtml = prdhtml = zglhtml = ""
 const
 BARR = {
@@ -16,75 +16,12 @@ vstavka = document.getElementById("vstavka"),
 prd = document.getElementById("prd"),
 zgl = document.getElementById("zgl"),
 isN = n => !isNaN(parseFloat(n)) && isFinite(n),
-scrollTo = el => 
+OnInput = e =>
 {
-	const
-	to = el.offsetTop-80 || 0,
-	duration = 400,
-	element = document.scrollingElement || document.documentElement,
-	start = element.scrollTop,
-	change = to - start,
-	startDate = +new Date(),
-	easeInOutQuad = (t, b, c, d) => {
-		t /= d/2
-		if (t < 1) return c/2*t*t + b
-		t--
-		return -c/2 * (t*(t-2) - 1) + b
-	},
-	animateScroll = () => {
-		const currentDate = +new Date()
-		const currentTime = currentDate - startDate
-		element.scrollTop = parseInt(easeInOutQuad(currentTime, start, change, duration))
-		if(currentTime < duration) {
-			requestAnimationFrame(animateScroll)
-		}
-		else {
-			element.scrollTop = to
-		}
-	}
-	animateScroll()
-},
-OnE = (en,el,fu,kc) =>
-{
-	let f = e =>
-	{
-		let tg = e.originalTarget || e.target,
-			id = tg.id || tg.classList[0]
-		if (!kc && OnEa[en][id] || kc && kc == e.keyCode && OnEa[en][id] || OnEa[en][id] == "*") OnEa[en][id][0](en,tg,kc)
-	}
-	if (!OnEa[en])
-	{
-		OnEa[en] = {}
-		document.addEventListener(en,f)
-	}
-	OnEa[en][el] = [fu,kc]
-}, OnEa = {},
-onAddIn = (en,tg) =>
-{
-	tg.insertAdjacentHTML("afterEnd", "<span class=\"addIn str inp\" contenteditable></span>")
-	tg.classList.remove("addIn")
-},
-onAddLin = (en,tg) =>
-{
-	let add = ""
-	for(let ii=0; ii<4; ii++) add += "<span class=inp contenteditable></span>"
-	tg.insertAdjacentHTML("afterEnd", add)
-
-	tg.parentElement.insertAdjacentHTML("afterEnd", "<div class=\"lin slova\"><span class=num>"+ (Number(tg.previousElementSibling.textContent) + 1) + "</span><span class=\"addLin inp\" contenteditable></span></div></div>")
-	tg.classList.remove("addLin")
-},
-onAddLin2 = (en,tg) =>
-{
-	tg.parentElement.insertAdjacentHTML("afterEnd", "<div class=\"lin zgl\"><span class=\"addLin2 str inp\" contenteditable></span></div>")
-	tg.classList.remove("addLin2")
-	tg.parentElement.classList.add("zgl")
-	onAddIn(en,tg)
-},
-OnInput = (en,tg) =>
-{
-	let id = tg.id || tg.classList[0]
+	let tg = e.originalTarget || e.target,
+		id = tg.id || tg.classList[0]
 	if (id == "str" && tg.textContent.length == 0) 
-	{ 
+	{
 		tg.remove() 
 		return 
 	}
@@ -130,7 +67,7 @@ OnPaste = e =>
 onCreate = () =>
 {
 	Slova = []
-	document.querySelectorAll(".slova > .inp:not(.addLin)").forEach((e)=>
+	document.querySelectorAll(".slova > .inp").forEach((e)=>
 	{
 		Slova.push(e.textContent)
 	})
@@ -141,10 +78,10 @@ onCreate = () =>
 	})
 ///////////////////////////////////
 	Stroka = []
-	document.querySelectorAll("#prd .zgl").forEach((e,i)=>
+	document.querySelectorAll(".prd").forEach((e,i)=>
 	{
 		let yy=[]
-		e.querySelectorAll(".inp:not(.addLin2):not(.addIn)").forEach((ee)=>
+		e.querySelectorAll(".inp").forEach((ee)=>
 		{
 			let x = ee.textContent.split("|")
 			if (x.length>1) ee=x
@@ -154,10 +91,10 @@ onCreate = () =>
 		Stroka.push(yy)
 	})
 	Zagolovok = []
-	document.querySelectorAll("#zgl .zgl").forEach((e,i)=>
+	document.querySelectorAll(".zgl").forEach((e,i)=>
 	{
 		let yy=[]
-		e.querySelectorAll(".inp:not(.addLin2):not(.addIn)").forEach((ee)=>
+		e.querySelectorAll(".inp").forEach((ee)=>
 		{
 			let x = ee.textContent.split("|")
 			if (x.length>1) ee=x
@@ -172,24 +109,11 @@ onCreate = () =>
 	{
 		cont.innerHTML += "<div id=i"+ i +" class=blk contenteditable><pre class=h>"+ fish(1) +"</pre><pre class=h2>"+ fish(2) +"</pre><pre class=h3>"+ fish(2) +"</pre><pre class=t>"+ fish(3) +"</pre></div>"
 	}
-
-	console.log("Slova", Slova)
-	console.log("Vstavka", Vstavka)
-	console.log("Stroka", Stroka)
-	console.log("Zagolovok", Zagolovok)
-
-	scrollTo(document.querySelector('#cont'))
 }
 
-
-
-OnE("input", "inp", OnInput)
-OnE("input", "str", OnInput)
-OnE("click", "bCreate", onCreate)
-OnE("keydown", "addLin", onAddLin)
-OnE("keydown", "addLin2", onAddLin2)
-OnE("keydown", "addIn", onAddIn)
+bCreate.addEventListener("click", onCreate)
 document.addEventListener("paste", OnPaste)
+document.addEventListener("input", OnInput)
 document.addEventListener("keypress", (e) => {if(e.keyCode==13) e.preventDefault()})
 
 for(let i=0; i<Slova.length; i=i+5)
@@ -198,7 +122,7 @@ for(let i=0; i<Slova.length; i=i+5)
 	for(let ii=0; ii<5; ii++) slhtml += "<span class=inp contenteditable>" + Slova[i+ii] + "</span>"
 	slhtml += "</div>"
 }
-slovar.innerHTML = slhtml + "<div class=\"lin slova\"><span class=num>"+ Slova.length/5 +"</span><span class=\"addLin inp\" contenteditable></span></div>"
+slovar.innerHTML = slhtml
 
 for(let i=0; i<Vstavka.length; i=i+5)
 {
@@ -210,29 +134,26 @@ vstavka.innerHTML = vshtml
 
 for(let i=0,txt; i<Stroka.length; i++)
 {
-	prdhtml += "<div class=\"lin zgl\">"
+	prdhtml += "<div class=\"lin prd\">"
 	for(let ii=0; ii<Stroka[i].length; ii++) 
 	{
 		txt =  Stroka[i][ii]
 		if (typeof txt == "object") txt = txt.join("|")
 		prdhtml += "<span class=\"str inp\" contenteditable>" + txt + "</span>"
 	}
-	prdhtml += "<span class=\"addIn str inp\" contenteditable></span></div>"
+	prdhtml += "</div>"
 }
-prd.innerHTML = prdhtml + "<div class=\"lin\"><span class=\"addLin2 str inp\" contenteditable></span></div>"
+prd.innerHTML = prdhtml
 
 for(let i=0,txt; i<Zagolovok.length; i++)
 {
 	zglhtml += "<div class=\"lin zgl\">"
-	for(let ii=0; ii<Zagolovok[i].length; ii++)
+	for(let ii=0; ii<Zagolovok[i].length; ii++) 
 	{
 		txt =  Zagolovok[i][ii]
 		if (typeof txt == "object") txt = txt.join("|")
 		zglhtml += "<span class=\"str inp\" contenteditable>" + txt + "</span>"
 	}
-	zglhtml += "<span class=\"addIn str inp\" contenteditable></span></div>"
+	zglhtml += "</div>"
 }
-zgl.innerHTML = zglhtml + "<div class=\"lin\"><span class=\"addLin2 str inp\" contenteditable></span></div>"
-
-
-	console.log(OnEa)
+zgl.innerHTML = zglhtml
