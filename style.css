@@ -35,9 +35,9 @@ pre.h2, pre.h3
 {
 	position: fixed;
 	right: 5%;
-	bottom: 5%;
+	top: 5px;
 	font-family: inherit;
-	background-color: #ededed;
+	background-color: #f0f0f0e6;
 }
 #dir > * {
 	padding: 15px 20px;
@@ -55,19 +55,23 @@ pre.h2, pre.h3
 }
 .inp {
     padding: 5px 10px;
-    margin: -1px 5px 1px 0;
+    margin: 0px 2px 1px 0;
     display: inline-block;
     vertical-align: top;
     background-color: #dedede;
     border: solid 1px;
     border-color: #c7c7c7 white white #c7c7c7;
 }
+.addIn.inp:not(:hover):not(:focus), .addLin2.inp:not(:hover):not(:focus), .addLin.inp:not(:hover):not(:focus) {
+    border-color: white #ccc #ccc white;
+    background-color: #ededed;
+}
 .num {
     float: left;
     margin: 5px;
 }
 .lin {
-    padding: 10px 0 0 0;
+    padding: 15px 0 0 0;
 }
 .h4 {
     font-size: 17.44px;
