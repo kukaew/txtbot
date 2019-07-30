@@ -34,8 +34,8 @@ pre.h2, pre.h3
 #dir
 {
 	position: fixed;
-	right: 5%;
-	top: 5px;
+	right: 2vw;
+	top: 2vw;
 	font-family: inherit;
 	background-color: #f0f0f0e6;
 }
@@ -54,30 +54,30 @@ pre.h2, pre.h3
 	border-color: #ccc white white #ccc;
 }
 .inp {
-    padding: 5px 10px;
-    margin: 0px 2px 1px 0;
-    display: inline-block;
-    vertical-align: top;
-    background-color: #dedede;
-    border: solid 1px;
-    border-color: #c7c7c7 white white #c7c7c7;
+	padding: 5px 10px;
+	margin: 0px 2px 1px 0;
+	display: inline-block;
+	vertical-align: top;
+	background-color: #dedede;
+	border: solid 1px;
+	border-color: #c7c7c7 white white #c7c7c7;
 }
-.addIn.inp:not(:hover):not(:focus), .addLin2.inp:not(:hover):not(:focus), .addLin.inp:not(:hover):not(:focus) {
-    border-color: white #ccc #ccc white;
-    background-color: #ededed;
+.inp[class^="add"]:not(:hover):not(:focus) {
+	border-color: white #ccc #ccc white;
+	background-color: #ededed;
 }
 .num {
-    float: left;
-    margin: 5px;
+	float: left;
+	margin: 5px;
 }
 .lin {
-    padding: 15px 0 0 0;
+	padding: 15px 0 0 0;
 }
 .h4 {
-    font-size: 17.44px;
-    margin-top: 30px;
-    user-select: none;
+	font-size: 17.44px;
+	margin-top: 30px;
+	user-select: none;
 }
 i {
-    font-size: 14px;
+	font-size: 14px;
 }
