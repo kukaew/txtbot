@@ -50,7 +50,7 @@ pre.h2, pre.h3
 	border-color: white #ccc #ccc white;
 }
 #dir > *:hover {
-	background-color: #dedede;
+	background-color: #e6e6e6;
 	border-color: #ccc white white #ccc;
 }
 .inp {
